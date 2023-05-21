@@ -10,11 +10,11 @@ function Register() {
         username: "",
         password: "",
     };
-    // let navigate = useNavigate();
+    let navigate = useNavigate();
 
     const onSubmit = (data) => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
-            console.log(data)
+            navigate("/login")
         })
     };
     const validationSchema = Yup.object().shape({
