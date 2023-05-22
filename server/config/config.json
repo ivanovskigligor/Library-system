@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "password",
-    "database": "library-database",
+    "database": "librarysite-database",
     "host": "localhost",
     "dialect": "mysql"
   },

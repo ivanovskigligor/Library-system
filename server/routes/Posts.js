@@ -17,11 +17,17 @@ router.get("/byId/:id", async (req, res) => {
     res.json(post);
 })
 
+router.get("/byUserId/:id", async (req, res) => {
+    const id = req.params.id
+    const listOfUserPosts = await Posts.findAll({where : {UserId: id}, include: [Rating]})
+    res.json(listOfUserPosts);
+})
+
 router.post("/", validateToken, async (req, res) => {
     
     const post = req.body;
     post.username = req.user.username;
-    
+    post.UserId = req.user.id
     await Posts.create(post);
     res.json(post);
 })
@@ -35,5 +41,12 @@ router.delete("/:postId", validateToken, async(req,res) =>{
     })
     res.json("Deleted Post")
 })
+
+router.put("/:editPost", validateToken, async(req,res) =>{
+    const {newTitle, newPostText, id} = req.body;
+    await Posts.update({title: newTitle, postText: newPostText}, {where: {id:id}})
+    res.json(newTitle);
+})
+
 
 module.exports = router;

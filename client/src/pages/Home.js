@@ -1,7 +1,7 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState  } from "react";
+import { useNavigate , Link} from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { AuthContext } from '../helpers/AuthContext';
@@ -17,19 +17,19 @@ function Home() {
 
   useEffect(() => {
     // have to be logged in to access home page, change later
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/login")
     } else {
-    axios.get("http://localhost:3001/posts",
-      { headers: { accessToken: localStorage.getItem("accessToken") } }
-    ).then((response) => {
-      setListOfPosts(response.data.listOfPosts);
-      setRatedPosts(
-        response.data.ratedPosts.map((rate) => {
-          return rate.PostId;
-        }));
-    })
-  }
+      axios.get("http://localhost:3001/posts",
+        { headers: { accessToken: localStorage.getItem("accessToken") } }
+      ).then((response) => {
+        setListOfPosts(response.data.listOfPosts);
+        setRatedPosts(
+          response.data.ratedPosts.map((rate) => {
+            return rate.PostId;
+          }));
+      })
+    }
   }, []);
 
 
@@ -75,7 +75,7 @@ function Home() {
             <div className='body' onClick={() => { navigate(`/post/${value.id}`) }}>{value.postText}</div>
             <div className='footer'>
               <div className='username'>
-                {value.username}
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
               </div>
               <div className="buttons">
                 {/* favorite button */}

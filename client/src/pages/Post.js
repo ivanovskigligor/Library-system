@@ -51,13 +51,37 @@ function Post() {
 
     const deletePost = (id) => {
         axios
-          .delete(`http://localhost:3001/posts/${id}`, {
+            .delete(`http://localhost:3001/posts/${id}`, {
+                headers: { accessToken: localStorage.getItem("accessToken") },
+            })
+            .then(() => {
+                navigate("/");
+            });
+    };
+
+    const editPost = () => {
+        
+        // const ogTitle = postObject.title;
+        // const ogPostText = postObject.postText;
+        
+        let newTitle = prompt("Enter new title")
+        let newPostText = prompt("Enter new text")
+
+        if(newTitle === "" || newPostText === ""){
+            alert("Fields cannot be empty")
+        } else {
+        axios.put("http://localhost:3001/posts/editPost", {
+            newTitle: newTitle, newPostText: newPostText, id:id
+        },
+        {
             headers: { accessToken: localStorage.getItem("accessToken") },
-          })
-          .then(() => {
-            navigate("/");
-          });
-      };
+
+        })
+
+        setPostObject({...postObject, title: newTitle, postText: newPostText})
+    }
+    }
+
 
     return (
         <div className='postPage'>
@@ -68,8 +92,15 @@ function Post() {
                     <div className='footer'>
                         {postObject.username}
                         {authState.username === postObject.username && (
-                        <button
-                         onClick={()=>deletePost(postObject.id)}>Delete Post</button>)}
+                            <button
+                                onClick={() => deletePost(postObject.id)}>Delete Post</button>
+
+                        )}
+                        {authState.username === postObject.username && (
+                            <button
+                                onClick={() => editPost()}>Edit Post</button>
+
+                        )}
                     </div>
 
                 </div>
@@ -84,8 +115,8 @@ function Post() {
                                 {comment.commentBody}
                                 <label>Username: {comment.username}</label>
                                 {authState.username === comment.username && (
-                                <button 
-                                onClick={() => deleteComment(comment.id)}>X</button>)}
+                                    <button
+                                        onClick={() => deleteComment(comment.id)}>X</button>)}
                             </div>
                         )
                     })}

@@ -13,6 +13,7 @@ app.use("/posts", postRouter);
 const commentsRouter = require('./routes/Comments');
 app.use("/comments", commentsRouter);
 
+// change auth to users
 const usersRouter = require('./routes/Users');
 app.use("/auth", usersRouter);
 

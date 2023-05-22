@@ -6,8 +6,8 @@ import Post from "./pages/Post"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import PageNotFound from "./pages/PageNotFound"
-import { useNavigate } from "react-router-dom";
-
+import Profile from "./pages/Profile"
+import EditProfile from "./pages/EditProfile"
 
 import { AuthContext } from "./helpers/AuthContext"
 import { useState, useEffect } from 'react';
@@ -41,15 +41,22 @@ function App() {
   }, []);
 
   const logout = () => {
-    
+
 
     localStorage.removeItem("accessToken");
-    
+
     setAuthState({
       username: "",
       id: 0,
       status: false,
     });
+    window.location.pathname = "/login"
+
+  }
+
+
+  const test = () =>{
+    window.location.pathname = `/profile/${authState.id}`
   }
 
   return (
@@ -58,7 +65,7 @@ function App() {
         <Router>
           <div className='navbar'>
             <div className="links">
-              
+
               <Link to="/">Home</Link>
               {!authState.status ? (
                 <>
@@ -66,10 +73,10 @@ function App() {
                   <Link to="/register">Register</Link>
                 </>
               ) : <Link to="/createpost">Create Post</Link>
-            }
+              }
             </div>
             <div className="loggedInContainer">
-              <h1>{authState.username}</h1>
+              <h1 onClick={test}>{authState.username}</h1>
               {authState.status && <button onClick={logout}>Log Out</button>}
             </div>
           </div>
@@ -79,8 +86,10 @@ function App() {
             <Route path="/post/:id" exact element={<Post />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
-            <Route path="*" element={<PageNotFound/>} />
-            </Routes>
+            <Route path="/profile/:id" exact element={<Profile />} />
+            <Route path="/editprofile" exact element={<EditProfile />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
         </Router>
       </AuthContext.Provider>
     </div>
