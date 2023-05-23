@@ -40,6 +40,7 @@ router.post("/", validateToken, async (req, res) => {
     const post = req.body;
     post.username = req.user.username;
     post.UserId = req.user.id
+    post.GenreId = req.body.genreId
     await Posts.create(post);
     res.json(post);
 })

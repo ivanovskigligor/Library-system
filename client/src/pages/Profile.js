@@ -13,7 +13,7 @@ function Profile() {
     const [aboutme, setAboutMe] = useState("");
     const [listOfUserPosts, setListOfUserPosts] = useState([]);
     const [listOfFavoritedPosts, setListOfFavoritedPosts] = useState([]);
-
+ 
 
     useEffect(() => {
         axios.get(`http://localhost:3001/users/basicinfo/${id}`).then((response) => {
@@ -82,7 +82,6 @@ function Profile() {
                                         </div>
                                         <div className="buttons">
 
-                                            {/* WTFSTOO TUOTEN OB */}
                                             <label>{value.Ratings.length}</label>
 
                                         </div>

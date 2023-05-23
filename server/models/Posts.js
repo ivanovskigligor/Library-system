@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) =>{
         Posts.hasMany(models.Rating,{
             onDelete: "cascade"
         });
+
     };
 
     return Posts;

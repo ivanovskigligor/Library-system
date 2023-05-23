@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup"
 import axios from "axios";
@@ -10,10 +10,15 @@ function CreatePost() {
 
 
     const { authState } = useContext(AuthContext);
+    const [genres, setGenres] = useState([]);
+
 
     const initialValues = {
         title: "",
-        postText: ""
+        postText: "",
+        author: "",
+        description: "",
+        genreId: "",
     };
     let navigate = useNavigate();
 
@@ -23,6 +28,7 @@ function CreatePost() {
         axios.post("http://localhost:3001/posts", data, {
             headers: { accessToken: localStorage.getItem("accessToken") }
         }).then((response) => {
+            console.log(data)
             navigate("/")
         })
     };
@@ -30,11 +36,19 @@ function CreatePost() {
     useEffect(() => {
         if (!localStorage.getItem("accessToken"))
             navigate("/login")
+
+        axios.get('http://localhost:3001/genres').then((response) => {
+        setGenres(response.data.genres);
+        });
+
     }, [])
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required(),
-        postText: Yup.string().required()
+        postText: Yup.string().required(),
+        author: Yup.string().required(),
+        description: Yup.string().required(),
+        genreId: Yup.string().required(),
     });
 
 
@@ -78,6 +92,17 @@ function CreatePost() {
                         name="postText"
                         placeholder="Insert text"
                         rows="3" cols="10" />
+
+                    <label>Genre:</label>
+                    <ErrorMessage name='genreId' component='span' />
+                    <Field as='select' id='inputCreatePost' name='genreId'>
+                        <option>Select Genre</option>
+                        {genres.map((genre) => (
+                            <option key={genre.id} value={genre.id}>
+                                {genre.genre}
+                            </option>
+                        ))}
+                    </Field>
 
                     <button type='submit'>Submit</button>
                 </Form>

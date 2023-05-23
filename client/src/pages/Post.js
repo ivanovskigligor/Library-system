@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { AuthContext } from '../helpers/AuthContext';
 
@@ -13,6 +15,8 @@ function Post() {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const { authState } = useContext(AuthContext);
+    const [genres, setGenres] = useState([]);
+
 
     useEffect(() => {
 
@@ -22,6 +26,9 @@ function Post() {
 
         axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
             setComments(response.data);
+        });
+        axios.get('http://localhost:3001/genres').then((response) => {
+            setGenres(response.data.genres);
         });
     }, []);
 
@@ -46,7 +53,7 @@ function Post() {
                     setComments([...comments, commentToAdd]);
                     setNewComment("");
                 }
-            })
+            });
     };
 
     const deletePost = (id) => {
@@ -59,28 +66,11 @@ function Post() {
             });
     };
 
-    const editPost = () => {
-        
-        // const ogTitle = postObject.title;
-        // const ogPostText = postObject.postText;
-        
-        let newTitle = prompt("Enter new title")
-        let newPostText = prompt("Enter new text")
-
-        if(newTitle === "" || newPostText === ""){
-            alert("Fields cannot be empty")
-        } else {
-        axios.put("http://localhost:3001/posts/editPost", {
-            newTitle: newTitle, newPostText: newPostText, id:id
-        },
-        {
-            headers: { accessToken: localStorage.getItem("accessToken") },
-
-        })
-
-        setPostObject({...postObject, title: newTitle, postText: newPostText})
-    }
-    }
+    const getGenreName = (genreId) => {
+        const genre = genres.find((genre) => genre.id === genreId);
+        return genre ? genre.genre : '';
+    };
+    const [listOfPosts, setListOfPosts] = useState([]);
 
 
     return (
@@ -88,23 +78,27 @@ function Post() {
             <div className='leftSide'>
                 <div className='post' id='individual'>
                     <div className='title'>{postObject.title}</div>
+                    <div className='title'>{getGenreName(postObject.GenreId)}</div>
                     <div className='body'>{postObject.author}</div>
                     <div className='body'>{postObject.description}</div>
                     <div className='body'>{postObject.postText}</div>
                     <div className='footer'>
                         {postObject.username}
-                        {authState.username === postObject.username && (
+                        
+                        
+                    </div>
+                    <div style={{display: "inline"}}>
+                    {authState.username === postObject.username && (
                             <button
                                 onClick={() => deletePost(postObject.id)}>Delete Post</button>
 
                         )}
                         {authState.username === postObject.username && (
                             <button
-                            onClick={() => { navigate(`/editpost/${postObject.id}`); }}>Edit Post</button>
+                                onClick={() => { navigate(`/editpost/${postObject.id}`); }}>Edit Post</button>
 
                         )}
-                    </div>
-
+                        </div>
                 </div>
             </div>
             <div className='rightSide'>

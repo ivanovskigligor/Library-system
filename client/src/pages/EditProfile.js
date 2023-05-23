@@ -1,18 +1,30 @@
-import React, { useState , useContext} from "react";
+import React, { useState , useContext,useEffect} from "react";
 import axios from "axios";
 
 import { AuthContext } from '../helpers/AuthContext';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate ,useParams } from "react-router-dom";
 
 
 
 function EditProfile() {
 
+    // let { id } = useParams();
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const navigate = useNavigate();
 
     const { authState } = useContext(AuthContext);
+    const ogUsername = authState.username
+    const ids = authState.id;
+    const [aboutme, setAboutMe] = useState("");
+    
+    useEffect(() => {
+        
+        axios.get(`http://localhost:3001/users/basicinfo/${ids}`).then((response) => {
+            setAboutMe(response.data.aboutme)
+        })
+        
+    }, []);
 
     const changePassword = () => {
 
@@ -72,6 +84,7 @@ function EditProfile() {
 
 
     const [newAboutMe, setNewAboutMe] = useState("");
+
     const changeAboutMe = () => {
         if(newAboutMe === ""){
             alert("Fields cannot be empty")
@@ -100,7 +113,7 @@ function EditProfile() {
     return (
         <div>
             <h1>Change Password:</h1>
-            <input type="text" placeholder="" onChange={(event) => {
+            <input type="text" placeholder="old password" onChange={(event) => {
                 setOldPassword(event.target.value)
             }}></input>
             <input type="text" placeholder="new password" onChange={(event) => {
@@ -109,15 +122,15 @@ function EditProfile() {
             <button onClick={changePassword}>Change Password</button>
 
             <h1>Change Username:</h1>
-            <input type="text" placeholder="" onChange={(event) => {
+            <input type="text" defaultValue={ogUsername} onChange={(event) => {
                 setNewUsername(event.target.value)
             }}></input>
             <button onClick={changeUsername}>Change Username</button>
 
             <h1>Change About Me:</h1>
-            <textarea type="text" placeholder="" onChange={(event) => {
+            <textarea type="text" defaultValue={aboutme} onChange={(event) => {
                 setNewAboutMe(event.target.value)}} rows="10" cols="70"></textarea>
-            <button onClick={changeAboutMe}>Change Username</button>
+            <button onClick={changeAboutMe}>Change About Me</button>
 
         </div>
 
