@@ -22,6 +22,18 @@ router.get("/byUserId/:id", async (req, res) => {
     const listOfUserPosts = await Posts.findAll({where : {UserId: id}, include: [Rating]})
     res.json(listOfUserPosts);
 })
+router.get("/byFavoriteId/:id", async (req, res) => {
+    const id = req.params.id
+    const ratings = await Rating.findAll({ where: { UserId: id } });
+    
+    // Extract the PostIds from the ratings
+    const postIds = ratings.map(rating => rating.PostId);
+    
+    // Find all posts with matching PostIds
+    const listOfRatedPosts = await Posts.findAll({ where: { id: postIds }, include: [Rating] });
+
+    res.json(listOfRatedPosts);
+})
 
 router.post("/", validateToken, async (req, res) => {
     
@@ -42,10 +54,12 @@ router.delete("/:postId", validateToken, async(req,res) =>{
     res.json("Deleted Post")
 })
 
-router.put("/:editPost", validateToken, async(req,res) =>{
-    const {newTitle, newPostText, id} = req.body;
-    await Posts.update({title: newTitle, postText: newPostText}, {where: {id:id}})
-    res.json(newTitle);
+router.put("/:editPost", validateToken, async (req,res) =>{
+    
+    const {newTitle, newPostText, newAuthor, newDescription, id} = req.body;
+    Posts.update({title: newTitle, postText: newPostText, author:newAuthor, description:newDescription}, {where: {id: id}})
+    
+    res.json("post");
 })
 
 

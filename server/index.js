@@ -15,7 +15,7 @@ app.use("/comments", commentsRouter);
 
 // change auth to users
 const usersRouter = require('./routes/Users');
-app.use("/auth", usersRouter);
+app.use("/users", usersRouter);
 
 const ratingRouter = require('./routes/Rating');
 app.use("/rating", ratingRouter);

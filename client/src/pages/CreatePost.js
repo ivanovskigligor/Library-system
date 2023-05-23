@@ -7,6 +7,8 @@ import { AuthContext } from '../helpers/AuthContext';
 
 function CreatePost() {
 
+
+
     const { authState } = useContext(AuthContext);
 
     const initialValues = {
@@ -36,6 +38,9 @@ function CreatePost() {
     });
 
 
+    // connosons
+
+
     return (
         <div className='createPostPage'>
             <Formik
@@ -50,12 +55,29 @@ function CreatePost() {
                         name="title"
                         placeholder="Insert Title" />
 
-                    <label>Post:</label>
-                    <ErrorMessage name='postText' component="span" />
+                    <label>Author:</label>
+                    <ErrorMessage name='author' component="span" />
                     <Field
                         id="inputCreatePost"
-                        name="postText"
+                        name="author"
                         placeholder="Insert text" />
+
+                    <label>Description:</label>
+                    <ErrorMessage name='description' component="span" />
+                    <Field
+                        component="textarea"
+                        id="inputCreatePost"
+                        name="description"
+                        placeholder="Insert text" />
+
+                    <label>Post:</label>
+                    <ErrorMessage name='postText' />
+                    <Field
+                        component="textarea"
+                        id="inputCreatePost"
+                        name="postText"
+                        placeholder="Insert text"
+                        rows="3" cols="10" />
 
                     <button type='submit'>Submit</button>
                 </Form>

@@ -72,7 +72,7 @@ function Home() {
         return (
           <div key={key} className='post' >
             <div className='title'>{value.title}</div>
-            <div className='body' onClick={() => { navigate(`/post/${value.id}`) }}>{value.postText}</div>
+            <div className='body' onClick={() => { navigate(`/post/${value.id}`) }}>{value.description}</div>
             <div className='footer'>
               <div className='username'>
                 <Link to={`/profile/${value.UserId}`}>{value.username}</Link>

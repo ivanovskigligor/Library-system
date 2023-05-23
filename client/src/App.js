@@ -8,6 +8,7 @@ import Login from "./pages/Login"
 import PageNotFound from "./pages/PageNotFound"
 import Profile from "./pages/Profile"
 import EditProfile from "./pages/EditProfile"
+import EditPost from "./pages/EditPost"
 
 import { AuthContext } from "./helpers/AuthContext"
 import { useState, useEffect } from 'react';
@@ -23,7 +24,7 @@ function App() {
   })
 
   useEffect(() => {
-    axios.get("http://localhost:3001/auth/auth", {
+    axios.get("http://localhost:3001/users/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken")
       }
@@ -88,6 +89,7 @@ function App() {
             <Route path="/register" exact element={<Register />} />
             <Route path="/profile/:id" exact element={<Profile />} />
             <Route path="/editprofile" exact element={<EditProfile />} />
+            <Route path="/editpost/:id" exact element={<EditPost />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>

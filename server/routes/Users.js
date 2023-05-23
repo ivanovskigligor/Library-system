@@ -8,11 +8,12 @@ const bcrypt = require("bcrypt");
 const { sign, } = require("jsonwebtoken")
 
 router.post("/", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   bcrypt.hash(password, 8).then((hash) => {
     Users.create({
       username: username,
       password: hash,
+      email: email
     })
     res.json("succ")
   });
@@ -44,20 +45,36 @@ router.get("/basicinfo/:id", async (req, res) => {
   res.json(basicInfo)
 })
 
-router.put("/editprofile", validateToken, async (req, res) => {
-  const {oldPassword, newPassword} = req.body;
+router.put("/editpassword", validateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
   const user = await Users.findOne({ where: { username: req.user.username } });
-  
-  bcrypt.compare(oldPassword, user.password).then( async (match) => {
+
+  bcrypt.compare(oldPassword, user.password).then(async (match) => {
     if (!match) {
       res.json({ error: "Password doesent match already existing password" });
     }
     bcrypt.hash(newPassword, 8).then((hash) => {
-      Users.update({password: hash},{where: {username: req.user.username }})
+      Users.update({ password: hash }, { where: { username: req.user.username } })
       res.json("succ")
     });
-  
+
   })
+})
+
+router.put("/editusername", validateToken, async (req, res) => {
+  const { newUsername } = req.body;
+  Users.update({ username: newUsername }, { where: { username: req.user.username } })
+  res.json("succ")
+
+
+})
+
+router.put("/editaboutme", validateToken, async (req, res) => {
+  const { newAboutMe } = req.body;
+  Users.update({ aboutme: newAboutMe }, { where: { username: req.user.username } })
+  res.json("succ")
+
+
 })
 
 module.exports = router;

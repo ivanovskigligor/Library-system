@@ -88,6 +88,8 @@ function Post() {
             <div className='leftSide'>
                 <div className='post' id='individual'>
                     <div className='title'>{postObject.title}</div>
+                    <div className='body'>{postObject.author}</div>
+                    <div className='body'>{postObject.description}</div>
                     <div className='body'>{postObject.postText}</div>
                     <div className='footer'>
                         {postObject.username}
@@ -98,7 +100,7 @@ function Post() {
                         )}
                         {authState.username === postObject.username && (
                             <button
-                                onClick={() => editPost()}>Edit Post</button>
+                            onClick={() => { navigate(`/editpost/${postObject.id}`); }}>Edit Post</button>
 
                         )}
                     </div>
