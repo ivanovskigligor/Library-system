@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { Image } from "cloudinary-react"
 import { AuthContext } from '../helpers/AuthContext';
 
 function Profile() {
@@ -13,11 +13,15 @@ function Profile() {
     const [aboutme, setAboutMe] = useState("");
     const [listOfUserPosts, setListOfUserPosts] = useState([]);
     const [listOfFavoritedPosts, setListOfFavoritedPosts] = useState([]);
- 
+    const [publicId, setPublicId] = useState("");
+
 
     useEffect(() => {
         axios.get(`http://localhost:3001/users/basicinfo/${id}`).then((response) => {
             setUsername(response.data.username)
+        })
+        axios.get(`http://localhost:3001/users/basicinfo/${id}`).then((response) => {
+            setPublicId(response.data.profilephoto)
         })
         axios.get(`http://localhost:3001/users/basicinfo/${id}`).then((response) => {
             setAboutMe(response.data.aboutme)
@@ -30,11 +34,17 @@ function Profile() {
         })
     }, []);
 
+
+
     return (
         <div className='profilePageContainer'>
 
+
+
             <div className='editButton'>
                 <h1>Username: {username}</h1>
+                <Image style={{ height: "150px" }} cloudName="dezmxsi6t" publicId={publicId} />
+
                 <div className='body'>
                     <h1>About me:</h1>
                     {aboutme}

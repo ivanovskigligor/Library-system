@@ -34,6 +34,9 @@ router.post("/login", async (req, res) => {
   });
 });
 
+
+
+
 router.get("/auth", validateToken, (req, res) => {
   res.json(req.user)
 })
@@ -75,6 +78,12 @@ router.put("/editaboutme", validateToken, async (req, res) => {
   res.json("succ")
 
 
+})
+
+router.put("/changepicture", validateToken, async (req, res) => {
+  const {publicId} = req.body;
+  await Users.update({ profilephoto: publicId }, { where: { username: req.user.username } })
+  res.json("succ")
 })
 
 module.exports = router;

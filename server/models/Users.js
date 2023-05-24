@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     aboutme: {
       type: DataTypes.STRING,
     },
+    profilephoto: {
+      type: DataTypes.STRING,
+    },
   });
 
   Users.associate = (models) => {

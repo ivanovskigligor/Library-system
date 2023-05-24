@@ -1,8 +1,8 @@
-import React, { useState , useContext,useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 import { AuthContext } from '../helpers/AuthContext';
-import { useNavigate ,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
@@ -11,104 +11,149 @@ function EditProfile() {
     // let { id } = useParams();
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [publicId, setPublicId] = useState("");
     const navigate = useNavigate();
-
+    const [imageSelected, setImageSelected] = useState("")
     const { authState } = useContext(AuthContext);
     const ogUsername = authState.username
     const ids = authState.id;
     const [aboutme, setAboutMe] = useState("");
-    
+
     useEffect(() => {
-        
+
         axios.get(`http://localhost:3001/users/basicinfo/${ids}`).then((response) => {
             setAboutMe(response.data.aboutme)
         })
-        
+
     }, []);
 
     const changePassword = () => {
 
-        if(oldPassword === "" || newPassword === ""){
+        if (oldPassword === "" || newPassword === "") {
             alert("Fields cannot be empty")
         } else {
-        axios.put("http://localhost:3001/users/editpassword",
-        
-            {
-                oldPassword: oldPassword, newPassword: newPassword
-            },
-            {
-                headers:
+            axios.put("http://localhost:3001/users/editpassword",
+
                 {
-                    accessToken: localStorage.getItem("accessToken")
+                    oldPassword: oldPassword, newPassword: newPassword
                 },
-            }
-        ).then((response) => {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                alert("password was changed")
-                // ili toa ili uste na edit profile
-                navigate(`/profile/${authState.id}`)
-            }
-        })};
+                {
+                    headers:
+                    {
+                        accessToken: localStorage.getItem("accessToken")
+                    },
+                }
+            ).then((response) => {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    alert("password was changed")
+                    // ili toa ili uste na edit profile
+                    navigate(`/profile/${authState.id}`)
+                }
+            })
+        };
     }
 
 
     const [newUsername, setNewUsername] = useState("");
-    
-    
+
+
     const changeUsername = () => {
-        if(newUsername === ""){
+        if (newUsername === "") {
             alert("Fields cannot be empty")
         } else {
-        axios.put("http://localhost:3001/users/editusername",
-            {
-                newUsername: newUsername,
-            },
-            {
-                headers:
+            axios.put("http://localhost:3001/users/editusername",
                 {
-                    accessToken: localStorage.getItem("accessToken")
+                    newUsername: newUsername,
                 },
-            }
-        ).then((response) => {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                alert("Username was changed. Login again to see changes")
-                // ili toa ili uste na edit profile
-                navigate(`/profile/${authState.id}`)
-            }
-        })};
+                {
+                    headers:
+                    {
+                        accessToken: localStorage.getItem("accessToken")
+                    },
+                }
+            ).then((response) => {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    alert("Username was changed. Login again to see changes")
+                    // ili toa ili uste na edit profile
+                    navigate(`/profile/${authState.id}`)
+                }
+            })
+        };
     }
 
 
     const [newAboutMe, setNewAboutMe] = useState("");
 
     const changeAboutMe = () => {
-        if(newAboutMe === ""){
+        if (newAboutMe === "") {
             alert("Fields cannot be empty")
         } else {
-        axios.put("http://localhost:3001/users/editaboutme",
-            {
-                newAboutMe: newAboutMe,
-            },
-            {
-                headers:
+            axios.put("http://localhost:3001/users/editaboutme",
                 {
-                    accessToken: localStorage.getItem("accessToken")
+                    newAboutMe: newAboutMe,
                 },
-            }
+                {
+                    headers:
+                    {
+                        accessToken: localStorage.getItem("accessToken")
+                    },
+                }
+            ).then((response) => {
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    alert("About Me was changed")
+                    // ili toa ili uste na edit profile
+                    navigate(`/profile/${authState.id}`)
+                }
+            })
+        };
+    };
+
+    const uploadImage = () => {
+        const formData = new FormData();
+        formData.append("file", imageSelected)
+        formData.append("upload_preset", "lje3ooi5")
+        axios.post("https://api.cloudinary.com/v1_1/dezmxsi6t/image/upload", formData).then((response) => {
+                // Get the public_id of the uploaded image from the response data
+                
+                setPublicId(response.data.public_id);
+                alert("Image has been uploaded")
+            
+            })
+            .catch((error) => {
+                console.error('Error uploading image:', error);
+            });
+    }
+
+    const saveChanges = () =>{
+        console.log(publicId)
+        axios.put("http://localhost:3001/users/changepicture", 
+        {
+            publicId: publicId,
+        },
+        {
+            headers:
+            {
+                accessToken: localStorage.getItem("accessToken")
+            },
+        }
         ).then((response) => {
             if (response.data.error) {
                 alert(response.data.error);
             } else {
-                alert("About Me was changed")
+                alert("Profile picture was changed")
                 // ili toa ili uste na edit profile
                 navigate(`/profile/${authState.id}`)
             }
-        })};
+        })
     }
+
+
 
     return (
         <div>
@@ -129,8 +174,18 @@ function EditProfile() {
 
             <h1>Change About Me:</h1>
             <textarea type="text" defaultValue={aboutme} onChange={(event) => {
-                setNewAboutMe(event.target.value)}} rows="10" cols="70"></textarea>
+                setNewAboutMe(event.target.value)
+            }} rows="10" cols="70"></textarea>
             <button onClick={changeAboutMe}>Change About Me</button>
+
+            {/* test */}
+            <h1>Change Profile Photo:</h1>
+            <input type='file' onChange={(event) => {
+                setImageSelected(event.target.files[0])
+            }}></input>
+            <button onClick={uploadImage}>Change Image</button>
+            <button onClick={saveChanges}>Save Image</button>
+
 
         </div>
 
