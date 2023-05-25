@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
@@ -29,45 +29,55 @@ function Register() {
     });
 
     return (
-        <div className='createPostPage'>
+        <div className="container mt-4">
             <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
                 validationSchema={validationSchema}>
                 {({ errors }) => (
-                    <Form className='formContainer '>
 
-                        <label>User:</label>
-                        <ErrorMessage name='username' component="span" />
+                    <Form className='form-outline mb-4'>
+
+                        <label class="form-label mt-4">Username:</label>
+                        <ErrorMessage style={{color: "red"}} name='username' component="span" />
                         <Field
-                            id="inputCreatePost"
+                            type="text"
+                            class="form-control"
                             name="username"
                             placeholder="Insert user" />
-                        <label>Password:</label>
-                        <ErrorMessage name='password' component="span" />
+
+                        <label for="exampleInputPassword1" class="form-label mt-4">Password:</label><br/>
+
+                        <ErrorMessage style={{color: "red"}} name='password' component="span" />
                         <Field
-                            id="inputCreatePost"
+                            class="form-control"
+                            id="exampleInputPassword1"
                             type="password"
                             name="password"
                             placeholder="Insert password" />
 
 
-                        <label>Password Confirm</label>
-                        <ErrorMessage name='confirm' component="span" />
-                        <Field 
-                        id="inputCreatePost"
-                        type="password" 
-                        name="confirm"
-                        placeholder="Confirm password" />
-
-                        <label>Email:</label>
-                        <ErrorMessage name='email' component="span" />
+                        <label for="exampleInputPassword1" class="form-label mt-4">Password Confirm</label><br/>
+                        <ErrorMessage style={{color: "red"}} name='confirm' component="span" />
                         <Field
-                            id="inputCreatePost"
+                            class="form-control"
+                            id="exampleInputPassword1"
+                            type="password"
+                            name="confirm"
+                            placeholder="Confirm password" />
+
+                        <label for="exampleInputEmail1" class="form-label mt-4">Email address</label><br/>
+                        <ErrorMessage style={{color: "red"}} name='email' component="span" />
+                        <Field
+                            class="form-control"
+                            id="exampleInputEmail1"
                             type="email"
                             name="email"
                             placeholder="Insert email" />
-                        <button type='submit'>Submit</button>
+                        <br />
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-md btn-primary" type="submit">Register</button>
+                        </div>
 
                     </Form>
                 )}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Image } from "cloudinary-react"
 
 import { AuthContext } from '../helpers/AuthContext';
 
@@ -74,59 +75,81 @@ function Post() {
 
 
     return (
-        <div className='postPage'>
-            <div className='leftSide'>
-                <div className='post' id='individual'>
-                    <div className='title'>{postObject.title}</div>
-                    <div className='title'>{getGenreName(postObject.GenreId)}</div>
-                    <div className='body'>{postObject.author}</div>
-                    <div className='body'>{postObject.description}</div>
-                    <div className='body'>{postObject.postText}</div>
-                    <div className='footer'>
-                        {postObject.username}
-                        
-                        
+        <div class="p-3 mb-2 bg-dark text-white">
+            <div className="container text-dark p-2">
+                <div className="card p-2">
+                    <h3 className="card-header" onClick={() => navigate(`/post/${postObject.id}`)}>{postObject.title}</h3>
+                    <div className="card-body">
+                        <h5 className="card-title">{postObject.author}</h5>
+                        <h6 className="card-subtitle text-muted">{getGenreName(postObject.GenreId)}</h6>
                     </div>
-                    <div style={{display: "inline"}}>
-                    {authState.username === postObject.username && (
-                            <button
-                                onClick={() => deletePost(postObject.id)}>Delete Post</button>
 
-                        )}
-                        {authState.username === postObject.username && (
-                            <button
-                                onClick={() => { navigate(`/editpost/${postObject.id}`); }}>Edit Post</button>
-
-                        )}
+                    <div className="border-top border-dark d-flex">
+                        <div className="col-md-6 d-flex justify-content-center p-2">
+                            <Image cloudName="dezmxsi6t" className="w-100" publicId={postObject.postphoto} />
                         </div>
+
+                        <div className="col-md-6 p-4 d-flex flex-column">
+                            <div className=" card-text">
+                                <h3 className="card-subtitle">Preview:<br /></h3>
+                                <p class="text-primary"> {postObject.description}</p>
+                            </div>
+                            <div>
+                                <h3 className="card-subtitle">Review:<br /></h3>
+                                <p class="text-primary"> {postObject.postText}</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {authState.username === postObject.username && (
+                        <div className="btn-group" role="group">
+                            <button className="btn btn-md btn-primary" type="button" onClick={() => deletePost(postObject.id)}>Delete Post</button>
+                            <button className="btn btn-md btn-primary" type="button" onClick={() => { navigate(`/editpost/${postObject.id}`); }}>Edit Post</button>
+                        </div>
+                    )}
+
                 </div>
             </div>
-            <div className='rightSide'>
 
-                <div className='listOfComments'>
-                    {comments.map((comment, key) => {
-                        return (
 
-                            <div key={key} className='comment'>
-                                {comment.commentBody}
-                                <label>Username: {comment.username}</label>
-                                {authState.username === comment.username && (
-                                    <button
-                                        onClick={() => deleteComment(comment.id)}>X</button>)}
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="addCommentContainer">
-                    <input
-                        type="text"
-                        placeholder=""
-                        value={newComment}
-                        onChange={(event) => {
-                            setNewComment(event.target.value);
-                        }}
-                    />
-                    <button onClick={addComment}> Add Comment</button>
+            <div className="container text-dark p-2">
+                <div className="card p-2">
+                    <div className="">
+                        {comments.map((comment, key) => {
+                            return (
+                                <div key={key} class="list-group list-group-flush border border-dark">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="form-label">Username: {comment.username}</h5>
+                                            
+                                            {comment.commentBody}
+                                        </div>
+
+                                        {authState.username === comment.username && (
+                                            <button className="btn btn-sm btn-primary" type="button" onClick={() => deleteComment(comment.id)}>X</button>
+                                        )}
+                                    </li>
+                                </div>
+                            );
+                        })}
+
+                        <label class="form-label mt-4" for="readOnlyInput">Readonly input</label>
+                        <div class="input-group mb-3">
+                            <input
+                                class="form-control"
+                                id="readOnlyInput"
+                                type="text"
+                                placeholder=""
+                                value={newComment}
+                                onChange={(event) => {
+                                    setNewComment(event.target.value);
+                                }}
+                            />
+                            <button class="btn btn-primary" type="button" id="button-addon2" onClick={addComment}>Add Comment</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>)

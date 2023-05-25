@@ -9,7 +9,6 @@ import PageNotFound from "./pages/PageNotFound"
 import Profile from "./pages/Profile"
 import EditProfile from "./pages/EditProfile"
 import EditPost from "./pages/EditPost"
-
 import { AuthContext } from "./helpers/AuthContext"
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -56,7 +55,7 @@ function App() {
   }
 
 
-  const test = () =>{
+  const profile = () => {
     window.location.pathname = `/profile/${authState.id}`
   }
 
@@ -64,37 +63,59 @@ function App() {
     <div className='App'>
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-          <div className='navbar'>
-            <div className="links">
-
-              <Link to="/">Home</Link>
-              {!authState.status ? (
-                <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/register">Register</Link>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" style={{position: "initial;", right: "0",
+            left: "0"}}>
+          <div className="container-fluid">
+            <Link to="/"><a class="navbar-brand">Home</a></Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarColor02">
+              <ul className="navbar-nav mu-auto">
+                {!authState.status ? (
+                  <>
+                    <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                    <li><Link className="nav-item nav-link" to="/register">Register</Link></li>
+                  </>
+                ) : <><li><Link className="nav-item nav-link" to="/createpost">Create Post</Link></li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
                 </>
-              ) : <Link to="/createpost">Create Post</Link>
-              }
-            </div>
-            <div className="loggedInContainer">
-              <h1 onClick={test}>{authState.username}</h1>
-              {authState.status && <button onClick={logout}>Log Out</button>}
+                }
+              </ul>
+              {authState.status && (
+                <>
+              <ul className="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                  <a class="navbar-brand nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{authState.username}</a>
+                  <div class="dropdown-menu">
+                    <a className="dropdown-item" onClick={profile}>Profile</a>
+                    <div className="dropdown-divider"></div>
+                    {authState.status && <a className="dropdown-item" onClick={logout}>Log Out</a>}
+
+                  </div>
+                </li>
+              </ul>
+              </>)}
             </div>
           </div>
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/createpost" exact element={<CreatePost />} />
-            <Route path="/post/:id" exact element={<Post />} />
-            <Route path="/login" exact element={<Login />} />
-            <Route path="/register" exact element={<Register />} />
-            <Route path="/profile/:id" exact element={<Profile />} />
-            <Route path="/editprofile" exact element={<EditProfile />} />
-            <Route path="/editpost/:id" exact element={<EditPost />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </Router>
-      </AuthContext.Provider>
-    </div>
+        </nav>
+
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/createpost" exact element={<CreatePost />} />
+          <Route path="/post/:id" exact element={<Post />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/profile/:id" exact element={<Profile />} />
+          <Route path="/editprofile" exact element={<EditProfile />} />
+          <Route path="/editpost/:id" exact element={<EditPost />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
+    </div >
 
   );
 }

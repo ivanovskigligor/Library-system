@@ -41,6 +41,7 @@ router.post("/", validateToken, async (req, res) => {
     post.username = req.user.username;
     post.UserId = req.user.id
     post.GenreId = req.body.genreId
+    post.postphoto = req.body.publicId
     await Posts.create(post);
     res.json(post);
 })
@@ -57,8 +58,8 @@ router.delete("/:postId", validateToken, async(req,res) =>{
 
 router.put("/:editPost", validateToken, async (req,res) =>{
     
-    const {newTitle, newPostText, newAuthor, newDescription, id} = req.body;
-    Posts.update({title: newTitle, postText: newPostText, author:newAuthor, description:newDescription}, {where: {id: id}})
+    const {newTitle, newPostText, newAuthor, newDescription, publicId, id} = req.body;
+    Posts.update({title: newTitle, postText: newPostText, author:newAuthor, postphoto: publicId,description:newDescription}, {where: {id: id}})
     
     res.json("post");
 })

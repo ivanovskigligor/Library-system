@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { AuthContext } from '../helpers/AuthContext';
+import { Image } from "cloudinary-react"
 
 
 function Home() {
@@ -18,7 +19,7 @@ function Home() {
 
   useEffect(() => {
     // have to be logged in to access home page, change later
-    if (!localStorage.getItem("accessToken")) {
+    if (!localStorage.getItem("accessToken")) { 
       navigate("/login")
     } else {
       axios.get("http://localhost:3001/posts",
@@ -104,52 +105,75 @@ function Home() {
   };
 
   return (
-    <div>
+    <div class="p-3 mb-2">
       <div>
-        <input
-          type="text"
-          placeholder="Search by title"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
+        <form class="container mt-4 d-flex">
+          <input
+            className="form-control me-sm-2"
+            type="text"
+            placeholder="Search by title"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
 
-        <select value={selectedGenre} onChange={handleGenreChange}>
-          <option value="">All Genres</option>
-          {genres.map((genre) => (
-            <option key={genre.id} value={genre.id}>
-              {genre.genre}
-            </option>
-          ))}
-        </select>
+          <select class="" value={selectedGenre} onChange={handleGenreChange}>
+            <option value="">All Genres</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.genre}
+              </option>
+            ))}
+          </select>
 
-        <select value={sortOption} onChange={handleSortChange}>
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-          <option value="most_ratings">Most Ratings</option>
-        </select>
+          <select class="nav-item dropdown" value={sortOption} onChange={handleSortChange}>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="most_ratings">Most Ratings</option>
+          </select>
+        </form>
 
+
+
+ 
         {handleSearch().map((value, key) => (
-          <div key={key} className="post" onClick={() => navigate(`/post/${value.id}`)}>
-            <div className="title">{value.title}</div>
-            <div className="title">{getGenreName(value.GenreId)}</div>
-            <div className="body" >
-              {value.description}
-            </div>
-            <div className="body">{value.author}</div>
-            <div className="body">{value.description}</div>
-            <div className="body">{value.postText}</div>
-            <div className="footer">
-              <div className="username">
-                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+
+          <div key={key} className="container text-dark mt-4 w-50 p-2" style={{ width: "80%" }}>
+            <div className="card mb-3 w-md-50 p-2 mx-auto">
+              <h3 className="card-header" onClick={() => navigate(`/post/${value.id}`)}>{value.title}</h3>
+              <div className="card-body">
+                <h5 className="card-title">{value.author}</h5>
+                <h6 className="card-subtitle text-muted">{getGenreName(value.GenreId)}</h6>
               </div>
-              <div className="buttons">
-                <div>
-                  {ratedPosts.includes(value.id) ? (
-                    <FavoriteIcon onClick={() => rateaPost(value.id)} />
-                  ) : (
-                    <FavoriteBorderIcon onClick={() => rateaPost(value.id)} />
-                  )}
-                  <label>{value.Ratings.length}</label>
+
+              <div className="border-top border-dark d-flex">
+                <div className="col-md-6 d-flex justify-content-center p-2">
+                  <Image cloudName="dezmxsi6t" className="w-100" publicId={value.postphoto} />
+                </div>
+                <div className="col-md-6 p-4 d-flex align-items-center">
+                  <div className="card-text ">
+                    <h6 className="card-subtitle">Preview:<br /></h6>
+                    {value.description}
+                  </div>
+                  {/* <div>
+                    <h6 className="card-subtitle">Preview:<br /></h6>
+                    {value.postText}
+                  </div> */}
+                </div>
+              </div>
+
+              <div className="card-footer text-muted d-flex">
+                <div className="d-inline">
+                  <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+                </div>
+                <div className="d-inline ml-auto">
+                  <div>
+                    {ratedPosts.includes(value.id) ? (
+                      <FavoriteIcon onClick={() => rateaPost(value.id)} />
+                    ) : (
+                      <FavoriteBorderIcon onClick={() => rateaPost(value.id)} />
+                    )}
+                    <label>{value.Ratings.length}</label>
+                  </div>
                 </div>
               </div>
             </div>

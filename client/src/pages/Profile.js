@@ -14,6 +14,7 @@ function Profile() {
     const [listOfUserPosts, setListOfUserPosts] = useState([]);
     const [listOfFavoritedPosts, setListOfFavoritedPosts] = useState([]);
     const [publicId, setPublicId] = useState("");
+    const [genres, setGenres] = useState([]);
 
 
     useEffect(() => {
@@ -32,78 +33,106 @@ function Profile() {
         axios.get(`http://localhost:3001/posts/byFavoriteId/${id}`).then((response) => {
             setListOfFavoritedPosts(response.data)
         })
+        axios.get('http://localhost:3001/genres').then((response) => {
+            setGenres(response.data.genres);
+        });
     }, []);
 
-
+    const getGenreName = (genreId) => {
+        const genre = genres.find((genre) => genre.id === genreId);
+        return genre ? genre.genre : '';
+    };
 
     return (
-        <div className='profilePageContainer'>
+        <div className='p-3 mb-2'>
 
-
-
-            <div className='editButton'>
-                <h1>Username: {username}</h1>
-                <Image style={{ height: "150px" }} cloudName="dezmxsi6t" publicId={publicId} />
-
-                <div className='body'>
-                    <h1>About me:</h1>
-                    {aboutme}
-                </div>
-                {authState.username === username && <button className='editbutton' onClick={() => { navigate("/editprofile"); }}> Edit Profile</button>}
-            </div>
-            <div className='postsPage'>
-                <div className='profileLeft'>
-                    <h1>List of Users Posts</h1>
-                    <div className='listOfPosts'>
-                        {listOfUserPosts.map((values, key) => {
-                            return (
-                                <div key={key} className='post'>
-                                    <div className='title'>{values.title}</div>
-                                    <div className='body' onClick={() => { navigate(`/post/${values.id}`); }}>{values.postText}</div>
-                                    <div className='footer'>
-                                        <div className='username'>
-                                            {values.username}
-                                        </div>
-                                        <div className="buttons">
-
-
-                                            <label>{values.Ratings.length}</label>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            );
-                        })}
-
+            <div class="d-flex list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                    <div class="col-md-2 mb-1  justify-content-center">
+                        <h1>Username: {username}</h1>
+                        <Image class="img-thumbnail rounded w-100 mb-2  " cloudName="dezmxsi6t" publicId={publicId} />
+                        {authState.username === username && <button class="btn btn-secondary mt-6" onClick={() => { navigate("/editprofile"); }}> Edit Profile</button>}
+            
                     </div>
-                </div>
-                <div className='profileRight'>
-                    <h1>List of Favorited Posts</h1>
-                    <div className='listOfPosts'>
-                        {listOfFavoritedPosts.map((value, key) => {
-                            return (
-                                <div key={key} className='post'>
-                                    <div className='title'>{value.title}</div>
-                                    <div className='body' onClick={() => { navigate(`/post/${value.id}`); }}>{value.postText}</div>
-                                    <div className='footer'>
-                                        <div className='username'>
-                                            {value.username}
-                                        </div>
-                                        <div className="buttons">
-
-                                            <label>{value.Ratings.length}</label>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            );
-                        })}
-
+                    <div class="col-md-6 mb-1 text-right">
+                        <h1>About me:</h1>
+                        {aboutme}
                     </div>
                 </div>
             </div>
+
+
+
+
+            <hr />
+
+            <div className="p-3 mb-2 text-white">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h1>List of Users Posts</h1>
+                            <div className="listOfPosts">
+                                {listOfUserPosts.map((value, key) => {
+                                    return (
+                                        <div key={key} className="container text-dark mt-4 w-100 p-2" style={{ width: "80%" }}>
+                                            <div className="card mb-3 w-md-50 p-2 mx-auto">
+                                                <h3 className="card-header" onClick={() => navigate(`/post/${value.id}`)}>{value.title}</h3>
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{value.author}</h5>
+                                                    <h6 className="card-subtitle text-muted">{getGenreName(value.GenreId)}</h6>
+                                                </div>
+
+                                                <div className="border-top border-dark d-flex">
+                                                    <div className="col-md-6 d-flex justify-content-center p-2">
+                                                        <Image cloudName="dezmxsi6t" className="w-100" publicId={value.postphoto} />
+                                                    </div>
+                                                    <div className="col-md-6 p-4 d-flex align-items-center">
+                                                        <div className="card-text">
+                                                            <h6 className="card-subtitle">Preview:<br /></h6>
+                                                            {value.description}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <h1>List of Favorited Posts</h1>
+                            <div className="listOfPosts">
+                                {listOfFavoritedPosts.map((value, key) => {
+                                    return (
+                                        <div key={key} className="container text-dark mt-4 w-100 p-2" style={{ width: "80%" }}>
+                                            <div className="card mb-3 w-md-50 p-2 mx-auto">
+                                                <h3 className="card-header" onClick={() => navigate(`/post/${value.id}`)}>{value.title}</h3>
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{value.author}</h5>
+                                                    <h6 className="card-subtitle text-muted">{getGenreName(value.GenreId)}</h6>
+                                                </div>
+
+                                                <div className="border-top border-dark d-flex">
+                                                    <div className="col-md-6 d-flex justify-content-center p-2">
+                                                        <Image cloudName="dezmxsi6t" className="w-100" publicId={value.postphoto} />
+                                                    </div>
+                                                    <div className="col-md-6 p-4 d-flex align-items-center">
+                                                        <div className="card-text">
+                                                            <h6 className="card-subtitle">Preview:<br /></h6>
+                                                            {value.description}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 

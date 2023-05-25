@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditProfile() {
 
-    // let { id } = useParams();
+
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [publicId, setPublicId] = useState("");
@@ -119,29 +119,29 @@ function EditProfile() {
         formData.append("file", imageSelected)
         formData.append("upload_preset", "lje3ooi5")
         axios.post("https://api.cloudinary.com/v1_1/dezmxsi6t/image/upload", formData).then((response) => {
-                // Get the public_id of the uploaded image from the response data
-                
-                setPublicId(response.data.public_id);
-                alert("Image has been uploaded")
-            
-            })
+            // Get the public_id of the uploaded image from the response data
+
+            setPublicId(response.data.public_id);
+            alert("Image has been uploaded")
+
+        })
             .catch((error) => {
                 console.error('Error uploading image:', error);
             });
     }
 
-    const saveChanges = () =>{
+    const saveChanges = () => {
         console.log(publicId)
-        axios.put("http://localhost:3001/users/changepicture", 
-        {
-            publicId: publicId,
-        },
-        {
-            headers:
+        axios.put("http://localhost:3001/users/changepicture",
             {
-                accessToken: localStorage.getItem("accessToken")
+                publicId: publicId,
             },
-        }
+            {
+                headers:
+                {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+            }
         ).then((response) => {
             if (response.data.error) {
                 alert(response.data.error);
@@ -156,35 +156,55 @@ function EditProfile() {
 
 
     return (
-        <div>
-            <h1>Change Password:</h1>
-            <input type="text" placeholder="old password" onChange={(event) => {
-                setOldPassword(event.target.value)
-            }}></input>
-            <input type="text" placeholder="new password" onChange={(event) => {
-                setNewPassword(event.target.value)
-            }}></input>
-            <button onClick={changePassword}>Change Password</button>
+        <div className="p-3 mb-2 ">
 
-            <h1>Change Username:</h1>
-            <input type="text" defaultValue={ogUsername} onChange={(event) => {
-                setNewUsername(event.target.value)
-            }}></input>
-            <button onClick={changeUsername}>Change Username</button>
+            <h1>Edit Profile:</h1>
 
-            <h1>Change About Me:</h1>
-            <textarea type="text" defaultValue={aboutme} onChange={(event) => {
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="form-label mt-4">Change Password</label>
+
+                <input type="password" placeholder="old password" class="form-control" onChange={(event) => {
+                    setOldPassword(event.target.value)
+                }}></input>
+                <input type="password" placeholder="new password" class="form-control" onChange={(event) => {
+                    setNewPassword(event.target.value)
+                }}></input>
+                <button class="btn btn-sm btn-primary mt-2" onClick={changePassword}>Change Password</button>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label mt-4">Change Username:</label>
+                <input type="text" class="form-control" defaultValue={ogUsername} onChange={(event) => {
+                    setNewUsername(event.target.value)
+                }}></input>
+                <button class="btn btn-sm btn-primary mt-2" onClick={changeUsername}>Change Username</button>
+            </div>
+
+
+            <div class="form-group">
+                <label for="exampleTextarea" class="form-label mt-4">Change About Me:</label>
+           
+
+            <textarea type="text" class="form-control" id="exampleTextarea" rows="3" defaultValue={aboutme} onChange={(event) => {
                 setNewAboutMe(event.target.value)
-            }} rows="10" cols="70"></textarea>
-            <button onClick={changeAboutMe}>Change About Me</button>
+            }}></textarea>
+            <button class="btn btn-sm btn-primary mt-2" onClick={changeAboutMe}>Change About Me</button>
+            </div>
 
-            {/* test */}
-            <h1>Change Profile Photo:</h1>
-            <input type='file' onChange={(event) => {
-                setImageSelected(event.target.files[0])
-            }}></input>
-            <button onClick={uploadImage}>Change Image</button>
-            <button onClick={saveChanges}>Save Image</button>
+            
+            
+            <div className='form-group'>
+                <label for="formFile" class="form-label mt-4" aria-describedby="button-addon2">Select new profile photo</label>
+                <br />
+                <div class="input-group mb-3">
+                    <input class="form-control" type='file' onChange={(event) => {
+                        setImageSelected(event.target.files[0])
+                    }}></input>
+                    <button class="btn btn-sm btn-primary " id="button-addon2" type="button" onClick={uploadImage}>Upload Image</button>
+                </div>
+                <p class="text-danger">Wait a second for confimation of image upload before continuing.</p>
+            </div>
+
+            <button class="btn btn-sm btn-primary" onClick={saveChanges}>Save Image</button>
 
 
         </div>
