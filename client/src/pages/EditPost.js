@@ -79,9 +79,9 @@ function EditPost() {
 
 
     return (
-        <div className="p-3 mb-2 ">
+        <div className="p-3 mb-2 background text-white">
 
-            <h1>Edit Post:</h1>
+            <h1 className="text-white">Edit Post:</h1>
             <div class="form-group">
                 <label for="exampleTextarea" class="form-label mt-4">Title</label>
                 <textarea class="form-control border border-dark" id="exampleTextarea" rows="3" defaultValue={ogTitle} onChange={(event) => {
@@ -107,7 +107,7 @@ function EditPost() {
                 }}></textarea>
             </div>
 
-            <h1>Change Profile Photo:</h1>
+            <h1 className="text-white">Change Profile Photo:</h1>
             <div className='form-group'>
                 <label for="formFile" class="form-label mt-4" aria-describedby="button-addon2">Select a book cover from your files</label>
                 <br />

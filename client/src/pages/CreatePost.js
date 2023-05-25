@@ -98,81 +98,83 @@ function CreatePost() {
     }
 
     return (
-        <div className='container mt-4'>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={validationSchema}>
+        <div className='background p-3 mb-2'>
+            <div className='container text-white'>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}>
 
-                <Form className='form-outline mb-4'>
+                    <Form className='form-outline mb-4'>
 
-                    <label class="form-label mt-4">Title:</label>
-                    <ErrorMessage style={{ color: "red" }} name='title' component="span" />
-                    <Field
-                        type="text"
-                        id="inputCreatePost"
-                        class="form-control"
-                        name="title"
-                        placeholder="Insert Title" />
+                        <label class="form-label mt-4">Title:</label>
+                        <ErrorMessage style={{ color: "red" }} name='title' component="span" />
+                        <Field
+                            type="text"
+                            id="inputCreatePost"
+                            class="form-control"
+                            name="title"
+                            placeholder="Insert Title" />
 
-                    <label class="form-label mt-4">Author:</label>
-                    <ErrorMessage style={{ color: "red" }} name='author' component="span" />
-                    <Field
-                        type="text"
-                        id="inputCreatePost"
-                        class="form-control"
-                        name="author"
-                        placeholder="Insert text" />
+                        <label class="form-label mt-4">Author:</label>
+                        <ErrorMessage style={{ color: "red" }} name='author' component="span" />
+                        <Field
+                            type="text"
+                            id="inputCreatePost"
+                            class="form-control"
+                            name="author"
+                            placeholder="Insert text" />
 
-                    <label class="form-label mt-4">Description:</label>
-                    <ErrorMessage style={{ color: "red" }} name='description' component="span" />
-                    <Field
-                        component="textarea"
-                        id="inputCreatePost"
-                        class="form-control"
-                        name="description"
-                        placeholder="Insert text"
-                        rows="3" />
+                        <label class="form-label mt-4">Description:</label>
+                        <ErrorMessage style={{ color: "red" }} name='description' component="span" />
+                        <Field
+                            component="textarea"
+                            id="inputCreatePost"
+                            class="form-control"
+                            name="description"
+                            placeholder="Insert text"
+                            rows="3" />
 
-                    <label class="form-label mt-4">Post:</label>
-                    <ErrorMessage style={{ color: "red" }} name='postText' />
-                    <Field
-                        component="textarea"
-                        id="inputCreatePost"
-                        class="form-control"
-                        name="postText"
-                        placeholder="Insert text"
-                        rows="5" />
+                        <label class="form-label mt-4">Post:</label>
+                        <ErrorMessage style={{ color: "red" }} name='postText' />
+                        <Field
+                            component="textarea"
+                            id="inputCreatePost"
+                            class="form-control"
+                            name="postText"
+                            placeholder="Insert text"
+                            rows="5" />
 
-                    <label class="form-label mt-4">Genre:</label>
-                    <ErrorMessage style={{ color: "red" }} name='genreId' component='span' />
-                    <Field class="form-control" as='select' id='inputCreatePost' name='genreId'>
-                        <option>Select Genre</option>
-                        {genres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>
-                                {genre.genre}
-                            </option>
-                        ))}
-                    </Field>
+                        <label class="form-label mt-4">Genre:</label>
+                        <ErrorMessage style={{ color: "red" }} name='genreId' component='span' />
+                        <Field class="form-control" as='select' id='inputCreatePost' name='genreId'>
+                            <option>Select Genre</option>
+                            {genres.map((genre) => (
+                                <option key={genre.id} value={genre.id}>
+                                    {genre.genre}
+                                </option>
+                            ))}
+                        </Field>
 
-                    <div className='form-group'>
-                        <label for="formFile" class="form-label mt-4" aria-describedby="button-addon2">Select a book cover from your files</label>
-                        <br />
-                        <div class="input-group mb-3">
-                            <input class="form-control" type='file' id="formFile" aria-describedby="button-addon2" onChange={(event) => {
-                                setImageSelected(event.target.files[0])
-                            }} />
-                            <button class="btn btn-sm btn-primary " id="button-addon2" type="button" onClick={uploadImage}>Upload Image</button>
+                        <div className='form-group'>
+                            <label for="formFile" class="form-label mt-4" aria-describedby="button-addon2">Select a book cover from your files</label>
+                            <br />
+                            <div class="input-group mb-3">
+                                <input class="form-control" type='file' id="formFile" aria-describedby="button-addon2" onChange={(event) => {
+                                    setImageSelected(event.target.files[0])
+                                }} />
+                                <button class="btn btn-sm btn-primary " id="button-addon2" type="button" onClick={uploadImage}>Upload Image</button>
+                            </div>
+                            <p class="text-danger">Wait a second for confimation of image upload before continuing.</p>
                         </div>
-                        <p class="text-danger">Wait a second for confimation of image upload before continuing.</p>
-                    </div>
 
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-md btn-primary" type="submit">Submit</button>
-                    </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-md btn-primary" type="submit">Submit</button>
+                        </div>
 
-                </Form>
-            </Formik>
+                    </Form>
+                </Formik>
+            </div>
         </div>
     );
 

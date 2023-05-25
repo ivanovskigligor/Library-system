@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const cors = require('cors')
 const db = require('./models')
-
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
@@ -13,7 +13,6 @@ app.use("/posts", postRouter);
 const commentsRouter = require('./routes/Comments');
 app.use("/comments", commentsRouter);
 
-// change auth to users
 const usersRouter = require('./routes/Users');
 app.use("/users", usersRouter);
 
@@ -24,8 +23,10 @@ const genresRouter = require('./routes/Genres');
 app.use("/genres", genresRouter);
 
 db.sequelize.sync().then(()=>{
-    app.listen(3001, () => {
+    app.listen(process.env.PORT || 3001, () => {
         console.log("Server running on port 3001")
     });
-});
+}).catch((error) =>{
+    console.log(error)
+})
 

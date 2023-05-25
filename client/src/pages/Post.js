@@ -75,7 +75,7 @@ function Post() {
 
 
     return (
-        <div class="p-3 mb-2 bg-dark text-white">
+        <div class="p-3 mb-2 background">
             <div className="container text-dark p-2">
                 <div className="card p-2">
                     <h3 className="card-header" onClick={() => navigate(`/post/${postObject.id}`)}>{postObject.title}</h3>

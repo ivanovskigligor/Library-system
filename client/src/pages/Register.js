@@ -29,59 +29,61 @@ function Register() {
     });
 
     return (
-        <div className="container mt-4">
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={validationSchema}>
-                {({ errors }) => (
+        <div class="p-3 mb-2  background">
+            <div className="container mt-4 text-white">
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}>
+                    {({ errors }) => (
 
-                    <Form className='form-outline mb-4'>
+                        <Form className='form-outline mb-4'>
 
-                        <label class="form-label mt-4">Username:</label>
-                        <ErrorMessage style={{color: "red"}} name='username' component="span" />
-                        <Field
-                            type="text"
-                            class="form-control"
-                            name="username"
-                            placeholder="Insert user" />
+                            <label class="form-label mt-4">Username:</label>
+                            <ErrorMessage style={{ color: "red" }} name='username' component="span" />
+                            <Field
+                                type="text"
+                                class="form-control"
+                                name="username"
+                                placeholder="Insert user" />
 
-                        <label for="exampleInputPassword1" class="form-label mt-4">Password:</label><br/>
+                            <label for="exampleInputPassword1" class="form-label mt-4">Password:</label><br />
 
-                        <ErrorMessage style={{color: "red"}} name='password' component="span" />
-                        <Field
-                            class="form-control"
-                            id="exampleInputPassword1"
-                            type="password"
-                            name="password"
-                            placeholder="Insert password" />
+                            <ErrorMessage style={{ color: "red" }} name='password' component="span" />
+                            <Field
+                                class="form-control"
+                                id="exampleInputPassword1"
+                                type="password"
+                                name="password"
+                                placeholder="Insert password" />
 
 
-                        <label for="exampleInputPassword1" class="form-label mt-4">Password Confirm</label><br/>
-                        <ErrorMessage style={{color: "red"}} name='confirm' component="span" />
-                        <Field
-                            class="form-control"
-                            id="exampleInputPassword1"
-                            type="password"
-                            name="confirm"
-                            placeholder="Confirm password" />
+                            <label for="exampleInputPassword1" class="form-label mt-4">Password Confirm</label><br />
+                            <ErrorMessage style={{ color: "red" }} name='confirm' component="span" />
+                            <Field
+                                class="form-control"
+                                id="exampleInputPassword1"
+                                type="password"
+                                name="confirm"
+                                placeholder="Confirm password" />
 
-                        <label for="exampleInputEmail1" class="form-label mt-4">Email address</label><br/>
-                        <ErrorMessage style={{color: "red"}} name='email' component="span" />
-                        <Field
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            type="email"
-                            name="email"
-                            placeholder="Insert email" />
-                        <br />
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-md btn-primary" type="submit">Register</button>
-                        </div>
+                            <label for="exampleInputEmail1" class="form-label mt-4">Email address</label><br />
+                            <ErrorMessage style={{ color: "red" }} name='email' component="span" />
+                            <Field
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                type="email"
+                                name="email"
+                                placeholder="Insert email" />
+                            <br />
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-md btn-primary" type="submit">Register</button>
+                            </div>
 
-                    </Form>
-                )}
-            </Formik>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     )
 

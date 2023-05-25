@@ -156,9 +156,10 @@ function EditProfile() {
 
 
     return (
-        <div className="p-3 mb-2 ">
+        <div className="background">
+        <div className="container p-3 mb-2  text-white">
 
-            <h1>Edit Profile:</h1>
+            <h1 className="text-white">Edit Profile:</h1>
 
             <div class="form-group">
                 <label for="exampleInputPassword1" class="form-label mt-4">Change Password</label>
@@ -208,7 +209,7 @@ function EditProfile() {
 
 
         </div>
-
+        </div>
     )
 }
 

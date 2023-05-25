@@ -44,7 +44,7 @@ function Profile() {
     };
 
     return (
-        <div className='p-3 mb-2'>
+        <div className='mb-2 background'>
 
             <div class="d-flex list-group-item list-group-item-action flex-column align-items-start active">
                 <div class="d-flex w-100 justify-content-between">

@@ -20,7 +20,7 @@ function Home() {
   useEffect(() => {
     // have to be logged in to access home page, change later
     if (!localStorage.getItem("accessToken")) { 
-      navigate("/login")
+      navigate("/welcome")
     } else {
       axios.get("http://localhost:3001/posts",
         { headers: { accessToken: localStorage.getItem("accessToken") } }
@@ -105,7 +105,7 @@ function Home() {
   };
 
   return (
-    <div class="p-3 mb-2">
+    <div class="p-3 mb-2 background">
       <div>
         <form class="container mt-4 d-flex">
           <input
