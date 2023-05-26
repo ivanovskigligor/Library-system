@@ -21,7 +21,7 @@ function EditProfile() {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:5060/users/basicinfo/${ids}`).then((response) => {
+        axios.get(`http://88.200.63.148:5060/users/basicinfo/${ids}`).then((response) => {
             setAboutMe(response.data.aboutme)
         })
 
@@ -32,7 +32,7 @@ function EditProfile() {
         if (oldPassword === "" || newPassword === "") {
             alert("Fields cannot be empty")
         } else {
-            axios.put("http://localhost:5060/users/editpassword",
+            axios.put("http://88.200.63.148:5060/users/editpassword",
 
                 {
                     oldPassword: oldPassword, newPassword: newPassword
@@ -63,7 +63,7 @@ function EditProfile() {
         if (newUsername === "") {
             alert("Fields cannot be empty")
         } else {
-            axios.put("http://localhost:5060/users/editusername",
+            axios.put("http://88.200.63.148:5060/users/editusername",
                 {
                     newUsername: newUsername,
                 },
@@ -92,7 +92,7 @@ function EditProfile() {
         if (newAboutMe === "") {
             alert("Fields cannot be empty")
         } else {
-            axios.put("http://localhost:5060/users/editaboutme",
+            axios.put("http://88.200.63.148:5060/users/editaboutme",
                 {
                     newAboutMe: newAboutMe,
                 },
@@ -132,7 +132,7 @@ function EditProfile() {
 
     const saveChanges = () => {
         console.log(publicId)
-        axios.put("http://localhost:5060/users/changepicture",
+        axios.put("http://88.200.63.148:5060/users/changepicture",
             {
                 publicId: publicId,
             },
