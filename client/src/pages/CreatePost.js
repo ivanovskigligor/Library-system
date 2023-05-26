@@ -123,7 +123,7 @@ function CreatePost() {
                             id="inputCreatePost"
                             class="form-control"
                             name="author"
-                            placeholder="Insert text" />
+                            placeholder="Insert Author Name" />
 
                         <label class="form-label mt-4">Description:</label>
                         <ErrorMessage style={{ color: "red" }} name='description' component="span" />
@@ -132,7 +132,7 @@ function CreatePost() {
                             id="inputCreatePost"
                             class="form-control"
                             name="description"
-                            placeholder="Insert text"
+                            placeholder="Insert Description"
                             rows="3" />
 
                         <label class="form-label mt-4">Post:</label>
@@ -142,7 +142,7 @@ function CreatePost() {
                             id="inputCreatePost"
                             class="form-control"
                             name="postText"
-                            placeholder="Insert text"
+                            placeholder="Insert Post Text"
                             rows="5" />
 
                         <label class="form-label mt-4">Genre:</label>

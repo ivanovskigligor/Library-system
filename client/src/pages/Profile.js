@@ -70,7 +70,7 @@ function Profile() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
-                            <h1>List of Users Posts</h1>
+                            <h1 className='text-white'>List of Users Posts</h1>
                             <div className="listOfPosts">
                                 {listOfUserPosts.map((value, key) => {
                                     return (
@@ -100,7 +100,7 @@ function Profile() {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <h1>List of Favorited Posts</h1>
+                            <h1 className='text-white'>List of Favorited Posts</h1>
                             <div className="listOfPosts">
                                 {listOfFavoritedPosts.map((value, key) => {
                                     return (

@@ -18,7 +18,6 @@ function Home() {
   const [genres, setGenres] = useState([]);
 
   useEffect(() => {
-    // have to be logged in to access home page, change later
     if (!localStorage.getItem("accessToken")) { 
       navigate("/welcome")
     } else {
@@ -139,7 +138,7 @@ function Home() {
 
           <div key={key} className="container text-dark mt-4 w-50 p-2" style={{ width: "80%" }}>
             <div className="card mb-3 w-md-50 p-2 mx-auto">
-              <h3 className="card-header" onClick={() => navigate(`/post/${value.id}`)}>{value.title}</h3>
+              <h3 className="card-header" style={{cursor: "pointer"}} onClick={() => navigate(`/post/${value.id}`)}>{value.title}</h3>
               <div className="card-body">
                 <h5 className="card-title">{value.author}</h5>
                 <h6 className="card-subtitle text-muted">{getGenreName(value.GenreId)}</h6>
@@ -154,10 +153,7 @@ function Home() {
                     <h6 className="card-subtitle">Preview:<br /></h6>
                     {value.description}
                   </div>
-                  {/* <div>
-                    <h6 className="card-subtitle">Preview:<br /></h6>
-                    {value.postText}
-                  </div> */}
+                  
                 </div>
               </div>
 

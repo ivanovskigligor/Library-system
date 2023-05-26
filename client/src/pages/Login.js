@@ -31,7 +31,7 @@ function Login() {
             <div class="container text-white">
                 <div className='form-outline mb-4'>
                     <label class="form-label mt-4">Username:</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={(event) => {
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" onChange={(event) => {
                         setUsername(event.target.value)
                     }} />
                 </div>

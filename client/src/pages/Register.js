@@ -45,7 +45,17 @@ function Register() {
                                 type="text"
                                 class="form-control"
                                 name="username"
-                                placeholder="Insert user" />
+                                placeholder="Insert username" />
+
+                            <label for="exampleInputEmail1" class="form-label mt-4">Email address</label><br />
+                            <ErrorMessage style={{ color: "red" }} name='email' component="span" />
+                            <Field
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                type="email"
+                                name="email"
+                                placeholder="Insert email" />
+
 
                             <label for="exampleInputPassword1" class="form-label mt-4">Password:</label><br />
 
@@ -67,14 +77,7 @@ function Register() {
                                 name="confirm"
                                 placeholder="Confirm password" />
 
-                            <label for="exampleInputEmail1" class="form-label mt-4">Email address</label><br />
-                            <ErrorMessage style={{ color: "red" }} name='email' component="span" />
-                            <Field
-                                class="form-control"
-                                id="exampleInputEmail1"
-                                type="email"
-                                name="email"
-                                placeholder="Insert email" />
+
                             <br />
                             <div class="d-grid gap-2">
                                 <button class="btn btn-md btn-primary" type="submit">Register</button>
