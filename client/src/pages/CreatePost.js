@@ -26,7 +26,7 @@ function CreatePost() {
     const onSubmit = (data) => {
 
         data.publicId = publicId; // Include publicId in form data
-        axios.post("http://localhost:3001/posts", data, {
+        axios.post("http://localhost:5060/posts", data, {
             headers: { accessToken: localStorage.getItem("accessToken") }
         }).then((response) => {
             console.log(data)
@@ -38,7 +38,7 @@ function CreatePost() {
         if (!localStorage.getItem("accessToken"))
             navigate("/login")
 
-        axios.get('http://localhost:3001/genres').then((response) => {
+        axios.get('http://localhost:5060/genres').then((response) => {
             setGenres(response.data.genres);
         });
 
@@ -76,7 +76,7 @@ function CreatePost() {
 
     const saveChanges = () => {
         console.log(publicId)
-        axios.put("http://localhost:3001/users/changepicture",
+        axios.put("http://localhost:5060/users/changepicture",
             {
                 publicId: publicId,
             },

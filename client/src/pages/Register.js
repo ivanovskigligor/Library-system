@@ -15,7 +15,7 @@ function Register() {
     let navigate = useNavigate();
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:3001/users", data).then((response) => {
+        axios.post("http://localhost:5060/users", data).then((response) => {
             navigate("/login")
         })
     };

@@ -29,7 +29,7 @@ function EditPost() {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
+        axios.get(`http://localhost:5060/posts/byId/${id}`).then((response) => {
             setPostObject(response.data);
         });
     }, []);
@@ -54,7 +54,7 @@ function EditPost() {
     const editPost = () => {
 
 
-        axios.put(`http://localhost:3001/posts/editpost`, {
+        axios.put(`http://localhost:5060/posts/editpost`, {
             newTitle: newTitle, newPostText: newPostText, newAuthor: newAuthor, newDescription: newDescription, publicId: publicId, id: id
         },
             {
