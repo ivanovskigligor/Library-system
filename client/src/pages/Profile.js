@@ -18,22 +18,22 @@ function Profile() {
 
 
     useEffect(() => {
-        axios.get(`http://88.200.63.148:5060/users/basicinfo/${id}`).then((response) => {
+        axios.get(`/users/basicinfo/${id}`).then((response) => {
             setUsername(response.data.username)
         })
-        axios.get(`http://88.200.63.148:5060/users/basicinfo/${id}`).then((response) => {
+        axios.get(`/users/basicinfo/${id}`).then((response) => {
             setPublicId(response.data.profilephoto)
         })
-        axios.get(`http://88.200.63.148:5060/users/basicinfo/${id}`).then((response) => {
+        axios.get(`/users/basicinfo/${id}`).then((response) => {
             setAboutMe(response.data.aboutme)
         })
-        axios.get(`http://88.200.63.148:5060/posts/byUserId/${id}`).then((response) => {
+        axios.get(`/posts/byUserId/${id}`).then((response) => {
             setListOfUserPosts(response.data)
         })
-        axios.get(`http://88.200.63.148:5060/posts/byFavoriteId/${id}`).then((response) => {
+        axios.get(`/posts/byFavoriteId/${id}`).then((response) => {
             setListOfFavoritedPosts(response.data)
         })
-        axios.get('http://88.200.63.148:5060/genres').then((response) => {
+        axios.get('/genres').then((response) => {
             setGenres(response.data.genres);
         });
     }, []);

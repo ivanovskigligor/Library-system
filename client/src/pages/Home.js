@@ -21,7 +21,7 @@ function Home() {
     if (!localStorage.getItem("accessToken")) { 
       navigate("/welcome")
     } else {
-      axios.get("http://88.200.63.148:5060/posts",
+      axios.get("/posts",
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       ).then((response) => {
         setListOfPosts(response.data.listOfPosts);
@@ -30,7 +30,7 @@ function Home() {
             return rate.PostId;
           }));
       });
-      axios.get('http://88.200.63.148:5060/genres').then((response) => {
+      axios.get('/genres').then((response) => {
         setGenres(response.data.genres);
       });
     }
@@ -42,7 +42,7 @@ function Home() {
   };
 
   const rateaPost = (postId) => {
-    axios.post("http://88.200.63.148:5060/rating",
+    axios.post("/rating",
       { PostId: postId },
       { headers: { accessToken: localStorage.getItem("accessToken") } }
 

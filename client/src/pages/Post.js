@@ -21,20 +21,20 @@ function Post() {
 
     useEffect(() => {
 
-        axios.get(`http://88.200.63.148:5060/posts/byId/${id}`).then((response) => {
+        axios.get(`/posts/byId/${id}`).then((response) => {
             setPostObject(response.data);
         });
 
-        axios.get(`http://88.200.63.148:5060/comments/${id}`).then((response) => {
+        axios.get(`/comments/${id}`).then((response) => {
             setComments(response.data);
         });
-        axios.get('http://88.200.63.148:5060/genres').then((response) => {
+        axios.get('/genres').then((response) => {
             setGenres(response.data.genres);
         });
     }, []);
 
     const deleteComment = (id) => {
-        axios.delete(`http://88.200.63.148:5060/comments/${id}`, {
+        axios.delete(`/comments/${id}`, {
             headers: { accessToken: localStorage.getItem("accessToken") },
         }).then(() => {
             setComments(comments.filter((val) => {
@@ -44,7 +44,7 @@ function Post() {
     }
 
     const addComment = () => {
-        axios.post("http://88.200.63.148:5060/comments",
+        axios.post("/comments",
             { commentBody: newComment, PostId: id },
             { headers: { accessToken: localStorage.getItem("accessToken") } }).then((response) => {
                 if (response.data.error) {
@@ -59,7 +59,7 @@ function Post() {
 
     const deletePost = (id) => {
         axios
-            .delete(`http://88.200.63.148:5060/posts/${id}`, {
+            .delete(`/posts/${id}`, {
                 headers: { accessToken: localStorage.getItem("accessToken") },
             })
             .then(() => {

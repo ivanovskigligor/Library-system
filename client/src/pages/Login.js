@@ -11,7 +11,7 @@ function Login() {
 
     const login = () => {
         const data = { username: username, password: password }
-        axios.post("http://88.200.63.148:5060/users/login", data).then((response) => {
+        axios.post("/users/login", data).then((response) => {
             if (response.data.error) {
                 alert(response.data.error);
             } else {

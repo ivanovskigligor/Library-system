@@ -15,7 +15,7 @@ function Register() {
     let navigate = useNavigate();
 
     const onSubmit = (data) => {
-        axios.post("http://88.200.63.148:5060/users", data).then((response) => {
+        axios.post("/users", data).then((response) => {
             navigate("/login")
         })
     };
