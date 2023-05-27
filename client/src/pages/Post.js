@@ -134,7 +134,7 @@ function Post() {
                             );
                         })}
 
-                        <label class="form-label mt-4" for="readOnlyInput">Readonly input</label>
+                        <label class="form-label mt-4" for="readOnlyInput">Comments</label>
                         <div class="input-group mb-3">
                             <input
                                 class="form-control"

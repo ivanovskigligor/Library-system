@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "password",
-    "database": "librarysite-database",
-    "host": "localhost",
+    "username": "gligorivanovski",
+    "password": "123456789",
+    "database": "library_database",
+    "host": "www.db4free.net",
     "dialect": "mysql"
   },
   "test": {

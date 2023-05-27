@@ -52,13 +52,14 @@ function App() {
       id: 0,
       status: false,
     });
-    window.location.pathname = "/login"
+    window.location = "/login"
 
   }
 
 
   const profile = () => {
-    window.location.pathname = `/profile/${authState.id}`
+    window.location = `/profile/${authState.id}`
+    
   }
 
   return (
@@ -95,6 +96,7 @@ function App() {
                         <a class="navbar-brand nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{authState.username}</a>
                         <div class="dropdown-menu">
                           <a className="dropdown-item" onClick={profile}>Profile</a>
+                          <Link className="dropdown-item" to={`/profile/${authState.id}`}>Create Post</Link>
                           <div className="dropdown-divider"></div>
                           {authState.status && <a className="dropdown-item" onClick={logout}>Log Out</a>}
 
